@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragment::head(~{::title})">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>首页</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css" >
+	<link rel="stylesheet" th:href="@{/css/me.css}" >
+</head>
+<body>
+	<!-- 导航 -->
+	<nav th:replace="fragment::menu(1)" class="ui inverted attached segment m-padded-tb-mini">
+	 <div class="ui container">
+		 <div class="ui inverted secondary menu">
+			<h2 class="ui teal header item">LostFound</h2>
+			<a href="index.html" class="item"><i class="mini home icon"></i>首页</a>
+			<a th:href="@{/announce}" class="item"><i class="mini edit icon"></i>发布</a>
+			<a href="mine.html" class="item"><i class="mini user icon"></i>我的</a>
+			<div class="right m-item item m-mobile-hide">
+			  <div class="ui icon inverted transparent input m-margin-tb-tiny">
+			    <input type="text" placeholder="Search....">
+			    <i class="search link icon"></i>
+			  </div>
+			</div>
+		 </div>
+	 </div>
+	</nav>
+	
+	<!-- 中间内容 -->
+	<div class="m-container m-padded-tb-large">
+		<div class="ui container">
+			<div class="ui grid">
+				<!-- 左边启示列表 -->
+				<div class="eleven wide column">
+					
+					<!-- header -->
+					<div class="ui top attached segment ">
+						<div class="ui middle aligned two column grid">
+							<div class="column">
+								<h3 th:text="${message}" class="ui teal header">启事</h3>
+							</div>
+							<div class="right aligned column">
+								共<h2 th:text="${postList.size()}" class="ui orange header m-inline-block m-text-thin">14</h2>篇
+							</div>
+						</div>
+					</div>
+					<!-- content -->
+					<div class="ui attached segment">
+						
+						<div th:each="post:${postList}" class="ui padded vertical segment m-padded-tb-large">
+						  <div class="ui mobile reversed stackable grid">
+						    <div class="eleven wide column">
+								<div class="ui grid">
+									<div class="eleven wide column">
+
+										<div class="ui mini horizontal link list">
+										  <div class="item">
+											<img th:src="@{${post.user.photo}}"  class="personal ui avatar image"
+                                                    data-postid="0" th:attr="data-postid=${post.id}">
+											<div th:text="${post.uname}" class="content"><a href="#" class="header">张梦珠</a></div>
+										  </div>
+                                            <div th:classappend="${post.id}" class=" ui personalInfo fluid popup top left transition hidden">
+                                                <div class="ui">
+                                                    <p>用户名：[[${post.user.username}]]</p>
+                                                    <p>性别：[[${post.user.sex}]]</p>
+                                                    <p>年龄：[[${post.user.age}]]</p>
+                                                    <p>个性签名：[[${post.user.personalSay}]]</p>
+                                                </div>
+                                                <div class="ui" style="margin-left: 50px">
+                                                    <img th:src="@{${post.user.rewardCode}}" class="ui image" style="width: 120px;height: 120px;">
+                                                    <p style="margin-left: 25px">微信打赏码</p>
+                                                </div>
+
+                                            </div>
+
+
+										  <div class="item">
+											<div th:if="${post.status==1 && post.flag==0}" class="ui orange label horizontal" data-tooltip="正在寻找">寻物启事</div>
+											<div th:if="${post.status==0 && post.flag==0}" class="ui green label horizontal" data-tooltip="已经找到">寻物启事</div>
+											<div th:if="${post.status==1 && post.flag==1}" class="ui yellow label horizontal" data-tooltip="等待认领">失物招领</div>
+											<div th:if="${post.status==0 && post.flag==1}" class="ui blue label horizontal" data-tooltip="已经认领">失物招领</div>
+										  </div>
+
+										  <div class="item">
+											<i class="tag icon"></i> [[ ${post.typeName} ]]
+										  </div>
+										  <div class="item">
+											<i class="calendar icon"></i> [[ ${#dates.format(post.ctime, 'yyyy-MM-dd HH:mm:ss')} ]]
+										  </div>
+										</div>
+									</div>
+						        </div>	
+								<div class="ui mini horizontal link list">
+									<div class="item">
+										<h3 th:text="${post.title}" class="ui header">我的校园卡丢了</h3>
+									</div>
+								    <div class="item">
+										<i  class="map pin icon"></i> [[ ${post.address} ]]
+								    </div>
+								</div>
+								
+								<p th:text="${post.content}" class="m-text">今天中午大概12点的时候,从食堂离开忘了拿走餐桌上的校园卡,有捡到的吗?</p>
+								<div class="ui grid">
+									<div class="eleven wide column">
+										<div class="ui mini horizontal link list">
+											<div class="item">
+												<i class="comment icon"></i>
+                                                [[${post.allComment.size()}]] comments
+											</div>
+										    <div class="item">
+												<i class="eye icon"></i>
+                                                [[${post.viewCount}]]
+										    </div>
+										</div>
+										
+									</div>
+									<div class="right aligned five wide column">
+									  <a th:href="@{/detail(postId=${post.id})}" class="ui teal basic button m-padded-tiny m-text-thin">查看详情</a>
+									</div>
+								</div>
+								
+							</div>
+						
+						    <div class="five wide column">
+								<a href="#" target="_blank">
+									<img th:src="@{${post.picture}}" alt="" class="ui rounded image">
+								</a>	    
+						    </div>
+						  </div>
+						</div>
+					</div>
+					<!-- footer -->
+					<div class="ui bottom attached segment">
+						<div class="ui middle aligned two column grid">
+							<div class="column">
+								<a th:if="${pageInfo.prePage}!=0" th:href="${#request.getRequestURL()}+'?page='+${pageInfo.prePage}" class="ui teal basic button">上一页</a>
+							</div>
+                            <div class="right aligned column">
+                                <a th:if="${pageInfo.nextPage} <= ${pageInfo.pages}" th:href="${#request.getRequestURL()}+'?page='+${pageInfo.nextPage}" class="ui teal basic button">下一页</a>
+                            </div>
+                            <div class="center column">
+                                <label>总共[[${pageInfo.pages}]]页，当前第[[${pageInfo.pageNum}]]页</label>
+                            </div>
+
+						</div>
+					</div>
+				</div>
+				<!-- 右边标签公告等展示 -->
+				<div class="five wide column">
+					<!-- 标签展示 -->
+					<div class="ui segments m-margin-top-large">
+					  <div class="ui secondary segment">
+					    <div class="ui two column grid">
+					      <div class="column">
+					        <i class="tags icon"></i>标签
+					      </div>
+					      
+					    </div>
+					  </div>
+					  <div class="ui teal segment">
+					    <a th:href="@{/index(status=1,flag=0)}" href="#" class="ui teal basic left pointing label m-margin-tb-large">
+					      正在寻找 <div class="detail">[[${SL[0]}]]</div>
+					    </a>
+						<a th:href="@{/index(status=0,flag=0)}" href="#" class="ui teal basic left pointing label m-margin-tb-large">
+						  已经找到 <div class="detail">[[${SL[1]}]]</div>
+						</a>
+						<a th:href="@{/index(status=1,flag=1)}" href="#" class="ui teal basic left pointing label m-margin-tb-large">
+						  等待认领 <div class="detail">[[${SL[2]}]]</div>
+						</a>
+						<a th:href="@{/index(status=0,flag=1)}" href="#" class="ui teal basic left pointing label m-margin-tb-large">
+						  已被认领 <div class="detail">[[${SL[3]}]]</div>
+						</a>
+					  </div>
+					</div>
+					<!-- 分类 -->
+					
+					<div class="ui segments m-margin-top-large">
+					  <div class="ui secondary segment">
+					    <div class="ui two column grid">
+					      <div class="column">
+					        <i class="bookmark icon"></i>分类
+					      </div>
+					      
+					    </div>
+					  </div>
+					  <div class="ui teal segment">
+                          <a th:each="type:${typeList}" th:href="@{/index(type=${type.name})}" class="ui teal basic left pointing label m-margin-tb-large">
+                              [[${type.name}]]<div class="detail">[[${type.count}]]</div>
+                          </a>
+					  </div>
+					</div>
+					<!-- 公告 -->
+					<div class="ui segments m-margin-top-large">
+					  <div class="ui secondary segment">
+					    <div class="ui two column grid">
+					      <div class="column">
+					        <i class="bell icon"></i>公告
+					      </div>
+					      
+					    </div>
+					  </div>
+					  <div th:each="notice:${notices}" class="ui teal segment">
+					    <div class="ui fluid vertical menu">
+                            <a th:text="${notice.title}" th:data-tooltip="${notice.content}" style="text-align: center;" class="item">
+                                系统新增加了添加好友功能,快来试试吧!
+                            </a>
+                            <div style="text-align: center;">
+                                <label  th:text="${#dates.format(notice.ctime,('yyyy-MM-dd HH:mm:ss'))}"></label>
+                            </div>
+					    </div>
+					  </div>
+					</div>
+					<!-- 二维码 -->
+					<h4 class="ui horizontal divider header m-margin-top-large">扫码联系我们</h4>
+					<div class="ui centered card" style="width: 11em">
+					    <img th:src="@{/img/wechat.png}"  alt="" class="ui rounded image" >
+					</div>
+				</div>
+			
+				
+			</div>
+		</div>
+	</div>
+	
+	<!-- 底部footer -->
+	<footer th:replace="fragment::footer" class="ui inverted vertical segment m-padded-tb-massive ">
+	    <div class="ui center aligned container">
+	        <div class="ui inverted divided grid">
+				<div class="three wide column">
+					<div class="ui inverted link list">
+						<div class="item">
+							<img src="./img/wechat.png" class="ui rounded image" alt="" style="width: 110px;">
+						</div>
+					</div>
+				</div>
+				<div class="three wide column">
+					<h4 class="ui inverted header m-text-thin m-text-spaced ">常见问题</h4>
+					<div class="ui inverted link list">
+						<a href="problems.html" class="item">点击查看</a>
+						<a th:href="@{/feedback}" class="item" >点击反馈</a>
+					</div>
+				</div>
+				<div class="three wide column">
+					 <h4 class="ui inverted header m-text-thin m-text-spaced ">联系我们</h4>
+					 <div class="ui inverted link list">
+						<a href="#" class="item m-text-thin">Email：2652517421@qq.com</a>
+						<a href="#" class="item m-text-thin">QQ：2652517421</a>
+					 </div>
+				</div>
+				<div class="seven wide column">
+					 <h4 class="ui inverted header m-text-thin m-text-spaced ">关于我们</h4>
+					 <p class="m-text-thin m-text-spaced m-opacity-mini">LostFound是我们团队共同开发的一个网站，希望可以给来到这儿的人们带来帮助...</p>
+				</div>
+			</div>
+			<div class="ui inverted section divider"></div>
+			<p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2019 - 2020 LostFound Designed by Alin</p>
+		</div>
+	</footer>
+
+    <!--	/*/<th:block th:replace="fragment::script">/*/-->
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/semantic.min.js}"></script>
+    <!--    /*/</th:block>/*/-->
+    <script th:inline="javascript">
+        $('.image.personal').mouseover(function () {
+            var current = this;
+            var postId = $(this).data('postid');
+            $(current).popup({
+                popup:$('.personalInfo.popup.'+postId),
+                target: current,
+                on:'click'
+            });
+        });
+    </script>
+</body>
+</html>

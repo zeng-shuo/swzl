@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>我的</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css" >
+	<link rel="stylesheet" th:href="@{/css/me.css}" >
+</head>
+<body>
+	<!-- 导航 -->
+    <nav  class="ui inverted attached segment m-padded-tb-mini">
+        <div class="ui container">
+            <div class="ui inverted secondary menu">
+                <h2 class="ui teal header item">LostFound</h2>
+                <a th:href="@{/index}" class="item"><i class="mini home icon"></i>首页</a>
+                <a th:href="@{/announce}" class="item"><i class="mini edit icon"></i>发布</a>
+                <a th:href="@{/mine}" class="item active"><i class="mini user icon"></i>我的</a>
+                <div class="right m-item  menu">
+                    <div class="ui dropdown  item">
+                        <div class="text">
+                            <img class="ui avatar image" th:src="@{${mine.photo}}">
+                            [[${mine.username}]]
+                        </div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a th:if="${session.localUser.admin} eq 'true'" th:href="@{/admin/userManage}" class="item">进入管理员界面</a>
+                            <a th:href="@{/repassword}" class="item">重置密码</a>
+                            <a th:href="@{/logout}" class="item">退出</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+	<div class="m-container m-padded-tb-large">
+		<div class="ui container">
+			<div class="ui grid">
+				<!-- 左边启示列表 -->
+				<div class="eleven wide column">
+					
+					<!-- header -->
+					<div class="ui top attached segment ">
+						<div class="ui middle aligned two column grid">
+							<div class="column">
+								<h3 class="ui teal header">启事</h3>
+							</div>
+							<div class="right aligned column">
+								共<h2 th:text="${posts.size()}" class="ui orange header m-inline-block m-text-thin">14</h2>篇
+							</div>
+						</div>
+					</div>
+					<!-- content -->
+					<div class="ui attached segment">
+						
+						<div th:each="post:${posts}" class="ui padded vertical segment m-padded-tb-large">
+						  <div class="ui mobile reversed stackable grid">
+						    <div class="eleven wide column">
+								<div class="ui grid">
+									<div class="eleven wide column">
+										
+										<div class="ui mini horizontal link list">
+										  <div class="item">
+											<img th:src="@{${post.user.photo}}" src="./images/HeadSculpture.jpg" class="ui avatar image">
+											<div class="content"><a href="#" class="header">Moon</a></div>
+										  </div>
+										  <div class="item">
+                                              <div th:if="${post.status==1 && post.flag==0}" class="ui orange label horizontal button" data-tooltip="正在寻找"
+                                                   th:onclick="'Values('+${post.id}+')'" data-toggle="modal" data-target="#myModal1">寻物启事</div>
+                                              <div th:if="${post.status==0 && post.flag==0}" class="ui green label horizontal button" data-tooltip="已经找到"
+                                                   th:onclick="'Values('+${post.id}+')'"  data-toggle="modal" data-target="#myModal1">寻物启事</div>
+                                              <div th:if="${post.status==1 && post.flag==1}" class="ui yellow label horizontal button" data-tooltip="等待认领"
+                                                   th:onclick="'Values('+${post.id}+')'" data-toggle="modal" data-target="#myModal1">失物招领</div>
+                                              <div th:if="${post.status==0 && post.flag==1}" class="ui blue label horizontal button" data-tooltip="已经认领"
+                                                   th:onclick="'Values('+${post.id}+')'" data-toggle="modal" data-target="#myModal1">失物招领</div>
+										  </div>
+										  
+										  <div class="item">
+											<i class="tag icon"></i> [[${post.typeName}]]
+										  </div>
+										  <div class="item">
+											<i class="calendar icon"></i> [[ ${#dates.format(post.ctime, 'yyyy-MM-dd HH:mm:ss')} ]]
+										  </div>
+										</div>
+									</div>
+						        </div>	
+								<div class="ui mini horizontal link list">
+									<div class="item">
+										<h3 th:text="${post.title}" class="ui header">我的校园卡丢了</h3>
+									</div>
+								    <div class="item">
+										<i  class="map pin icon"></i> [[${post.address}]]
+								    </div>
+								</div>
+								
+								<p  th:text="${post.content}" class="m-text">今天中午大概12点的时候,从食堂离开忘了拿走餐桌上的校园卡,有捡到的吗?</p>
+								<div class="ui grid">
+									<div class="eleven wide column">
+										<div class="ui mini horizontal link list">
+											<div class="item">
+												<i class="comment icon"></i>
+                                                [[${post.allComment.size()}]] comments
+											</div>
+										    <div class="item">
+												<i class="eye icon"></i> [[${post.viewCount}]]
+										    </div>
+											<div class="item" style="margin-left: 2em;">
+												<i class=" red trash alternate outline icon"></i>
+												<a th:onclick="'deletePost('+${post.id}+')'">删除</a>
+											</div>
+
+										</div>
+										
+									</div>
+									<div class="right aligned five wide column">
+									  <a th:href="@{/detail(postId=${post.id})}" href="detail.html" class="ui teal basic button m-padded-tiny m-text-thin">查看详情</a>
+									</div>
+								</div>
+								
+							</div>
+						
+						    <div class="five wide column">
+								<a href="#" >
+									<img  th:src="@{${post.picture}}" class="ui rounded image">
+								</a>	    
+						    </div>
+						  </div>
+						</div>
+						
+					</div>
+				</div>
+				
+				<div class="five wide column">
+					<div class="ui card">
+					 <div class="field">
+                         <div style="text-align: center;">
+                            <img style="width: 150px;height: 150px;" th:src="@{${mine.photo}}" />
+                         </div>
+					 </div>
+					  <div class="content">
+						<div class="inline fields">
+							<label class="m-text-thin " style="margin-right:0.5em;">用户名:</label>
+							<a th:text="${mine.username}" style="color: black;">Moon</a>
+						</div>
+					    <div class="inline fields">
+					    	<label class="m-text-thin" style="margin-right:0.5em;">邮箱:</label>
+					    	<a th:text="${mine.email}" style="color: black;">2652517421@qq.com</a>
+					    </div>
+					    <div class="inline fields">
+					        <label class="m-text-thin " style="margin-right:0.5em;">年龄:</label>
+					        <a th:text="${mine.age}" style="color: black;">19</a>
+					    </div>
+						
+						<div class="inline fields">
+						    <label class="m-text-thin " style="margin-right:0.5em;">性别:</label>
+						    <a th:text="${mine.sex}" style="color: black;">男</a>
+						</div>
+						<div class="inline fields">
+						    <label class="m-text-thin " style="margin-right:0.5em;">上次登录:</label>
+						    <a th:text="${#dates.format(mine.lastTime, 'yyyy-MM-dd HH:mm:ss')}" style="color: black;">2020-5-31 09:45</a>
+						</div>
+					  </div>
+					  <div class="extra content">
+					    <label class="m-text-thin " style="margin-right:0.5em;">个性签名:</label>
+					     <p th:text="${mine.personalSay}" style="color: black;">快来编辑你的个签吧...</p>
+					  </div>
+					  <div class="extra content">
+					    <div id="modelShow" class="ui fluid  teal  button">编辑</div>
+					  </div>
+					</div>
+					
+					 
+					
+					<h4 class="ui horizontal divider header m-margin-top-large">我的打赏码</h4>
+
+					<div class="ui centered card" style="width: 150px;">
+                        <img th:src="@{${session.localUser.rewardCode}}" style="width: 150px;height: 150px"/>
+				    </div>
+			
+				<!-- 模态框 -->
+                <form id="personModal" class="ui modal" method="post" th:action="@{/mine}" enctype="multipart/form-data">
+                  <i class="close icon"></i>
+                  <div class="header">
+                    个人信息
+                  </div>
+
+                  <div class="image content">
+                      <div class="ui medium image">
+                        <div class="field">
+                            <div id="imgPreview1" >
+                                 <div id="prompt3">
+                                 <span id="imgSpan" class="ui center">
+                                     <p class="m-text-thin m-text-spaced m-opacity-mini" >点击上传头像</p><!--style="color:beige;margin-top: 1em;margin-left: 1em;"-->
+                                     <i class="large upload icon" ></i>
+                                 </span>
+                                 <input name="upload" type="file" id="file" class="filepath" onchange="changepic(this)" accept="image/jpg,image/jpeg,image/png,image/PNG">
+                                 <!--当vaule值改变时执行changepic函数，规定上传的文件只能是图片-->
+                                 </div>
+                                 <img style="width: 150px;height: 150px" src="" id="img3" />
+                            </div>
+                        </div>
+                      </div>
+                      <div class="container" style="margin-left: 0.1em;"></div>
+                      <div class="ui form" style="margin-top: 0.3em;">
+
+                            <div class="inline fields">
+                                <label class="m-text-thin ">性别:</label>
+                                <div class="field">
+                                  <div class="ui radio checkbox">
+                                    <input value="man" type="radio" name="frequency" checked="checked">
+                                    <label class="m-text-thin ">男</label>
+                                  </div>
+                                </div>
+                                <div class="field">
+                                  <div class="ui radio checkbox">
+                                    <input value="woman" type="radio" name="frequency">
+                                    <label class="m-text-thin ">女</label>
+                                  </div>
+                                </div>
+                              </div>
+                            <div class="extra content">
+                              <label class="m-text-thin ">年龄:</label>
+                              <div class="ui input focus">
+                                <input name="age" type="text" placeholder="请填写您的年龄!">
+                              </div>
+                            </div>
+                            <div class="extra content" style="margin-top:0.5em ;">
+                              <label class="m-text-thin ">个签:</label>
+                              <div class="ui input focus">
+                                <input name="personalSay" type="text" placeholder="快来编辑你的个签吧...">
+                              </div>
+                            </div>
+                    </div>
+                      <div class="container" style="margin-left: 0.1em;"></div>
+                      <div class="ui medium image">
+                          <div class="field" style="padding-left: 100px;">
+                              <div id="imgPreview5" >
+                                  <div id="prompt5">
+                                 <span id="imgSpan5" class="ui center">
+                                     <p class="m-text-thin m-text-spaced m-opacity-mini" >点击上传打赏码</p><!--style="color:beige;margin-top: 1em;margin-left: 1em;"-->
+                                     <i class="large upload icon" ></i>
+                                 </span>
+                                      <input name="upload5" type="file" id="file5" class="filepath" onchange="changepic5(this)" accept="image/jpg,image/jpeg,image/png,image/PNG">
+                                      <!--当vaule值改变时执行changepic函数，规定上传的文件只能是图片-->
+                                  </div>
+                                  <img style="width: 150px;height: 150px" src="" id="img5" />
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="actions">
+                      <input id="modelCLose" type="button" class="ui black deny button  button" value="取消">
+                      <input type="submit" class="ui positive right  button" value="确定">
+                  </div>
+                </form>
+
+                <form class="ui modal" id="statusModal" th:action="@{/postStatus}" method="post">
+                    <i class="close icon"></i>
+                    <div class="header">
+                        修改物品状态
+                    </div>
+                    <div class="image content">
+                        <div>
+                            <input type="hidden" name="postID" id="postID">
+                            <label class="m-text-thin ">状态:</label>
+                            <div class="ui input focus">
+                                <!--                <input type="text">-->
+                                <select class="ui dropdown" name="status">
+                                    <option>已完成</option>
+                                    <option>进行中</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <input type="submit" class="ui positive right  button" value="确定">
+                    </div>
+                </form>
+			</div>
+		</div>
+        </div>
+	</div>
+
+
+	
+	<!-- 底部footer -->
+	<footer th:replace="fragment::footer" class="ui inverted vertical segment m-padded-tb-massive ">
+	    <div class="ui center aligned container">
+	        <div class="ui inverted divided grid">
+				<div class="three wide column">
+					<div class="ui inverted link list">
+						<div class="item">
+							<img src="./images/wechat.png" class="ui rounded image" alt="" style="width: 110px;">
+						</div>
+					</div>
+				</div>
+				<div class="three wide column">
+					<h4 class="ui inverted header m-text-thin m-text-spaced ">常见问题</h4>
+					<div class="ui inverted link list">
+						<a href="problems.html" class="item">点击查看</a>
+						<a href="feedback.html" class="item" >点击反馈</a> 
+					</div>
+				</div>
+				<div class="three wide column">
+					 <h4 class="ui inverted header m-text-thin m-text-spaced ">联系我们</h4>
+					 <div class="ui inverted link list">
+						<a href="#" class="item m-text-thin">Email：2652517421@qq.com</a>
+						<a href="#" class="item m-text-thin">QQ：2652517421</a>
+					 </div>
+				</div>
+				<div class="seven wide column">
+					 <h4 class="ui inverted header m-text-thin m-text-spaced ">关于我们</h4>
+					 <p class="m-text-thin m-text-spaced m-opacity-mini">LostFound是我们团队共同开发的一个网站，希望可以给来到这儿的人们带来帮助...</p>
+				</div>
+			</div>
+			<div class="ui inverted section divider"></div>
+			<p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2019 - 2020 LostFound Designed by Alin</p>
+		</div>
+	</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+    <script src="https://cdn.bootcss.com/semantic-ui/2.3.1/semantic.js"></script>
+    <script>
+
+        $('.ui.dropdown').dropdown({
+          on : 'hover'
+        });
+
+        function changepic() {
+         $("#prompt3").css("display", "none");
+         var reads = new FileReader();
+         f = document.getElementById('file').files[0];
+         reads.readAsDataURL(f);
+         reads.onload = function(e) {
+         document.getElementById('img3').src = this.result;
+         $("#img3").css("display", "block");
+         };
+        }
+        function changepic5() {
+         $("#prompt5").css("display", "none");
+         var reads = new FileReader();
+         f = document.getElementById('file5').files[0];
+         reads.readAsDataURL(f);
+         reads.onload = function(e) {
+         document.getElementById('img5').src = this.result;
+         $("#img5").css("display", "block");
+         };
+        }
+
+        function changepic2() {
+         $("#prompt2").css("display", "none");
+         var reads = new FileReader();
+         f = document.getElementById('file2').files[0];
+         reads.readAsDataURL(f);
+         reads.onload = function(e) {
+         document.getElementById('img2').src = this.result;
+         $("#img2").css("display", "block");
+         };
+        }
+
+        $(function () {
+            $("#modelShow").on("click",function () {
+                $("#personModal").modal("show");
+            });
+            $("#modelCLose").on("click",function () {
+                $("#personModal").modal("hide");
+            });
+        })
+        function deletePost(postId) {
+            $.ajax({
+                url: "mine/"+postId,
+                type: "delete",
+                async: true,
+                success: function (response) {
+                    console.log(response)
+                    alert("删除成功!");
+                    location.reload();
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        }
+        function Values(postID) {
+            $('#postID').val(postID);
+            $("#statusModal").modal("show");
+        }
+      </script>
+</body>
+</html>

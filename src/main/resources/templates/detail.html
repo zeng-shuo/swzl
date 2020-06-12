@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragment::head(~{::title})">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>详情</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css" >
+	<link rel="stylesheet" href="./css/me.css" >
+</head>
+
+<body>
+	<!-- 导航 -->
+	<nav th:replace="fragment::menu(0)" class="ui inverted attached segment m-padded-tb-mini">
+	 <div class="ui container">
+		 <div class="ui inverted secondary menu">
+			<h2 class="ui teal header item">LostFound</h2>
+			<a href="index.html" class="item"><i class="mini home icon"></i>首页</a>
+			<a href="announce.html" class="item"><i class="mini edit icon"></i>发布</a>
+			<a href="mine.html" class="item"><i class="mini user icon"></i>我的</a>
+			<div class="right m-item item m-mobile-hide">
+			  <div class="ui icon inverted transparent input m-margin-tb-tiny">
+			    <input type="text" placeholder="Search....">
+			    <i class="search link icon"></i>
+			  </div>
+			</div>
+		 </div>
+	 </div>
+	</nav>
+	
+	<!-- 中间内容 -->
+	<div class="m-container m-padded-tb-large" style="margin-left: 15em !important;">
+		<div class="ui container">
+			<div class="ui grid">
+				<!-- 左边启示列表 -->
+				<div class="thirteen wide column">
+					
+					<!-- header -->
+					<div class="ui top attached segment ">
+						<div class="ui middle aligned two column grid">
+							<div class="column">
+								<h3 class="ui teal header">详情</h3>
+							</div>
+							
+						</div>
+					</div>
+					<!-- content -->
+					<div class="ui attached segment">
+						
+						<div class="ui padded vertical segment m-padded-tb-large">
+							<div class="ui mobile reversed stackable grid">
+								<div class="eleven wide column" style="margin-left: 2em;margin-right: 3em;">
+									<div class="ui grid">
+										<div class="eleven wide column">
+											
+											<div class="ui mini horizontal link list" >
+											  <div class="item">
+												<img th:src="@{${post.user.photo}}" alt="" class="personal ui avatar image"
+                                                     data-postid="0" th:attr="data-postid=${post.id}">
+												<div th:text="${post.uname}" class="content"><a href="#" class="header">张梦珠</a></div>
+											  </div>
+                                                <div th:classappend="${post.id}" class=" ui personalInfo fluid popup top left transition hidden">
+                                                    <div class="ui">
+                                                        <p>用户名：[[${post.user.username}]]</p>
+                                                        <p>性别：[[${post.user.sex}]]</p>
+                                                        <p>年龄：[[${post.user.age}]]</p>
+                                                        <p>个性签名：[[${post.user.personalSay}]]</p>
+                                                    </div>
+                                                    <div class="ui" style="margin-left: 50px">
+                                                        <img th:src="@{${post.user.rewardCode}}" class="ui image" style="width: 120px;height: 120px;">
+                                                        <p style="margin-left: 25px">微信打赏码</p>
+                                                    </div>
+
+                                                </div>
+
+
+											  <div class="item" style="margin-left: 1em;">
+                                                  <div th:if="${post.status==1 && post.flag==0}" class="ui orange label horizontal" data-tooltip="正在寻找">寻物启事</div>
+                                                  <div th:if="${post.status==0 && post.flag==0}" class="ui green label horizontal" data-tooltip="已经找到">寻物启事</div>
+                                                  <div th:if="${post.status==1 && post.flag==1}" class="ui yellow label horizontal" data-tooltip="等待认领">失物招领</div>
+                                                  <div th:if="${post.status==0 && post.flag==1}" class="ui blue label horizontal" data-tooltip="已经认领">失物招领</div>
+											  </div>
+											  <div class="item" style="margin-left: 2em;">
+												<i class="tag icon"></i> [[${post.typeName}]]
+											  </div>
+											  <div class="item" style="margin-left: 2em;">
+												<i class="calendar icon"></i> [[ ${#dates.format(post.ctime, 'yyyy-MM-dd HH:mm:ss')} ]]
+											  </div>
+											</div>
+										</div>
+								    </div>	
+									<div class="ui mini horizontal link list">
+										<div class="item">
+											<h3 th:text="${post.title}" class="ui header">我的校园卡丢了</h3>
+										</div>
+									    <div class="item" style="margin-left: 2em;">
+											<i  class="map pin icon"></i> [[${post.address}]]
+									    </div>
+									</div>
+									
+									<p th:text="${post.content}" class="m-text">今天中午大概12点的时候,从食堂离开忘了拿走餐桌上的校园卡,有捡到的吗?</p>
+									<div class="ui grid">
+										<div class="nine wide column">
+											<div class="ui mini horizontal link list">
+												<div class="item">
+													<i class="comment icon"></i>
+                                                    [[${post.allComment.size()}]] comments
+												</div>
+											    <div class="item" style="margin-left: 2em;">
+													<i class="eye icon"></i> [[${post.viewCount}]]
+											    </div>
+												
+											</div>
+											
+										</div>
+										
+									</div>
+									
+								</div>
+														
+								<div class="three wide column">
+									<a href="#" target="_blank">
+										<img th:src="@{${post.picture}}" class="ui rounded image">
+									</a>	    
+								</div>
+								        
+								<div class="ui comments" style="margin-left: 2em;width: 100%">
+								  <h3 class="ui dividing header">评论</h3>
+								  <div th:each="everyComment:${post.allComment}" th:if="${everyComment.parent == 0}" class="comment">
+								    <a class="avatar">
+								      <img th:src="@{${everyComment.user.photo}}" src="./images/joe.jpg"
+                                           class="reply image ui" th:attr="data-commentid=${everyComment.id}">
+								    </a>
+                                      <div th:classappend="${everyComment.id}" class=" ui personalInfo fluid popup top left transition hidden">
+                                          <div class="ui">
+                                              <p>用户名：[[${everyComment.user.username}]]</p>
+                                              <p>性别：[[${everyComment.user.sex}]]</p>
+                                              <p>年龄：[[${everyComment.user.age}]]</p>
+                                              <p>个性签名：[[${everyComment.user.personalSay}]]</p>
+                                          </div>
+                                          <div class="ui" style="margin-left: 50px">
+                                              <img th:src="@{${everyComment.user.rewardCode}}" class="ui image" style="width: 120px;height: 120px;">
+                                              <p style="margin-left: 25px">微信打赏码</p>
+                                          </div>
+
+                                      </div>
+
+								    <div class="content">
+								      <a th:text="${everyComment.uname}" class="author">Joe Henderson</a>
+								      <div class="metadata">
+								        <span th:text="${everyComment.ctime}" class="date">5 days ago</span>
+								      </div>
+								      <div th:text="${everyComment.content}" class="text">
+								        Dude, this is awesome. Thanks so much
+								      </div>
+								      <div class="actions">
+								        <a data-parentid="1"
+                                           data-parentname="test"
+                                           th:attr="data-parentid=${everyComment.id},data-parentname=${everyComment.user.username}"
+                                           onclick="toReply(this)" class="reply">回复</a>
+								      </div>
+								    </div>
+                                      <div th:each="ct:${everyComment.comments}" class="comments">
+                                          <div class="comment">
+                                              <a class="avatar">
+                                                  <img th:src="@{${ct.user.photo}}" src="./images/jenny.jpg"
+                                                        class="multireply image ui" th:attr="data-ctid=${ct.id}" >
+                                              </a>
+                                              <div th:classappend="${ct.id}" class=" ui personalInfo fluid popup top left transition hidden">
+                                                  <div class="ui">
+                                                      <p>用户名：[[${ct.user.username}]]</p>
+                                                      <p>性别：[[${ct.user.sex}]]</p>
+                                                      <p>年龄：[[${ct.user.age}]]</p>
+                                                      <p>个性签名：[[${ct.user.personalSay}]]</p>
+                                                  </div>
+                                                  <div class="ui" style="margin-left: 50px">
+                                                      <img th:src="@{${ct.user.rewardCode}}" class="ui image" style="width: 120px;height: 120px;">
+                                                      <p style="margin-left: 25px">微信打赏码</p>
+                                                  </div>
+
+                                              </div>
+
+                                              <div class="content">
+                                                  <a th:text="${ct.uname}" class="author">Jenny Hess</a>
+                                                  <div class="metadata">
+                                                      <span th:text="${ct.ctime}"  class="date">Just now</span>
+                                                  </div>
+                                                  <div th:text="${ct.content}" class="text">
+                                                      Elliot you are always so right :)
+                                                  </div>
+                                                  <div class="actions">
+                                                      <a data-parentid="${everyComment.id}" data-parent="${ct.user.username}"
+                                                         th:attr="data-parentid=${everyComment.id},data-parentname=${ct.user.username}"
+                                                         onclick="toReply(this)" class="reply">回复</a>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+								  </div>
+
+								  <form class="ui reply form" >
+								    <div class="field"  >
+								      <textarea id="mycomment" placeholder="评论一下吧!"></textarea>
+								    </div>
+								    <div data-parentid="0" data-postid="" id="fabu"
+                                         th:attr="data-postid=${post.id}"
+                                         onclick="reflushComment(this)" class="ui blue labeled submit icon button">
+								      <i class="icon edit"></i>发布
+								    </div>
+								  </form>
+								</div>    
+							
+							</div>
+						</div>
+					</div>
+					
+					
+				</div>
+				
+			
+				
+			</div>
+		</div>
+
+	</div>	
+	
+	<!-- 底部footer -->
+	<footer th:replace="fragment::footer" class="ui inverted vertical segment m-padded-tb-massive ">
+	    <div class="ui center aligned container">
+	        <div class="ui inverted divided grid">
+				<div class="three wide column">
+					<div class="ui inverted link list">
+						<div class="item">
+							<img src="./images/wechat.png" class="ui rounded image" alt="" style="width: 110px;">
+						</div>
+					</div>
+				</div>
+				<div class="three wide column">
+					<h4 class="ui inverted header m-text-thin m-text-spaced ">常见问题</h4>
+					<div class="ui inverted link list">
+						<a href="problems.html" class="item">点击查看</a>
+						<a href="feedback.html" class="item" >点击反馈</a> 
+					</div>
+				</div>
+				<div class="three wide column">
+					 <h4 class="ui inverted header m-text-thin m-text-spaced ">联系我们</h4>
+					 <div class="ui inverted link list">
+						<a href="#" class="item m-text-thin">Email：2652517421@qq.com</a>
+						<a href="#" class="item m-text-thin">QQ：2652517421</a>
+					 </div>
+				</div>
+				<div class="seven wide column">
+					 <h4 class="ui inverted header m-text-thin m-text-spaced ">关于我们</h4>
+					 <p class="m-text-thin m-text-spaced m-opacity-mini">LostFound是我们团队共同开发的一个网站，希望可以给来到这儿的人们带来帮助...</p>
+				</div>
+			</div>
+			<div class="ui inverted section divider"></div>
+			<p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2019 - 2020 LostFound Designed by Alin</p>
+		</div>
+	</footer>
+
+
+    <!--	/*/<th:block th:replace="fragment::script">/*/-->
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/semantic.min.js}"></script>
+    <!--    /*/</th:block>/*/-->
+    <script>
+        function reflushComment(obj) {
+            var postId = $(obj).data('postid');
+            var parentId = $(obj).data('parentid');
+            var comment = $("#mycomment").val();
+            $.ajax({
+                url: "addcomment",
+                dataType: "JSON",
+                type: "post",
+                async: true,
+                data: {comment:comment,postId:postId,parentId:parentId},
+                success: function (response) {
+                    console.log(response);
+                    console.log(typeof response);
+                    if (response==1){
+                        $('#mycomment').val('');
+                        location.reload();
+                    }if (response==0){
+                        location.href="login";
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+       function toReply(obj){
+           $('#mycomment').attr('placeholder',"@"+$(obj).data("parentname")).focus();
+           $('#fabu').attr('data-parentid',$(obj).data("parentid"));
+       }
+       $('.image.personal').mouseover(function () {
+                var current = this;
+                var postId = $(this).data('postid');
+                $(current).popup({
+                    popup:$('.personalInfo.popup.'+postId),
+                    target: current,
+                    on:'click'
+                });
+            });
+       $('.image.reply').mouseover(function () {
+                var current = this;
+                var commentid = $(this).data('commentid');
+                $(current).popup({
+                    popup:$('.personalInfo.popup.'+commentid),
+                    target: current,
+                    on:'click'
+                });
+            });
+       $('.image.multireply').mouseover(function () {
+                var current = this;
+                var ctid = $(this).data('ctid');
+                $(current).popup({
+                    popup:$('.personalInfo.popup.'+ctid),
+                    target: current,
+                    on:'click'
+                });
+            });
+    </script>
+</body>
+</html>

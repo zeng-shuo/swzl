@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragment::head(~{::title})">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>常见问题</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css" >
+	<link rel="stylesheet" href="../static/css/me.css" >
+</head>
+<body>
+	<!-- 导航 -->
+	<nav th:replace="fragment::menu(0)" class="ui inverted attached segment m-padded-tb-mini">
+	 <div class="ui container">
+		 <div class="ui inverted secondary menu">
+			<h2 class="ui teal header item">LostFound</h2>
+			<a href="index.html" class="item"><i class="mini home icon"></i>首页</a>
+			<a href="announce.html" class="item"><i class="mini edit icon"></i>发布</a>
+			<a href="mine.html" class="item"><i class="mini user icon"></i>我的</a>
+			<div class="right m-item item m-mobile-hide">
+			  <div class="ui icon inverted transparent input m-margin-tb-tiny">
+			    <input type="text" placeholder="Search....">
+			    <i class="search link icon"></i>
+			  </div>
+			</div>
+		 </div>
+	 </div>
+	</nav>
+	
+	<!-- 中间内容 -->
+	<div class="m-container m-padded-tb-large">
+		<div class="ui container">
+			<div class="ui grid">
+				<!-- 左边启示列表 -->
+				<div class="eleven wide column">
+					
+					<!-- header -->
+					<div class="ui top attached segment ">
+						<div class="ui middle aligned column grid">
+							<div class="column">
+								<h3 class="ui teal header">We hope you can resolve your problems!</h3>
+							</div>
+							
+						</div>
+					</div>
+					<!-- content -->
+					<div class="ui attached segment">
+						
+						<div class="ui padded vertical segment m-padded-tb-large">
+							  <div class="ui mobile reversed stackable grid">
+										<h4  class="ui header">Q：收不到通知邮件？</h4>
+										<div class="ui mini horizontal link list">
+											<div class="item">
+												<i  class="large lightbulb outline icon"></i> 
+											</div>
+											<div class="item">
+												<p>A：邮件延时发送，一般3分钟之内送达，若长时间没有收到，请登录QQ邮箱，检查是否在垃圾箱中，为了保证您能及时收到我们的通知，强烈建议您将<span style="font-weight: bold">（ctguswzl.cn）</span>添加到QQ邮箱的域名白名单中，
+												<a target="_blank" href="https://service.mail.qq.com/cgi-bin/help?subtype=1&id=16&no=113" rel="nofollow" class="ui orange header m-inline-block m-text-thin">【设置方法】</a></p>
+											</div>
+										</div>
+							  </div>
+						</div>
+						<div class="ui padded vertical segment m-padded-tb-large">
+						  <div class="ui mobile reversed stackable grid">
+							  <h4  class="ui header">Q：发帖无法上传图片？</h4>
+							  <div class="ui mini horizontal link list">
+								<div class="item">
+									<i  class="large lightbulb outline icon"></i> 
+								</div>
+								  <div class="item">
+									<p>A：考虑到服务器的压力，我们对发帖上传图片的数量以及大小做了限制，单个图片大小不得超过1MB,图片数量不得超过3张，所以您通常需要对上传的图片预先处理，比如隐私信息打码,把拍摄的照片截图上传。</p>
+								  </div>
+							  </div>
+						  </div>
+						</div>
+						<div class="ui padded vertical segment m-padded-tb-large">
+						  <div class="ui mobile reversed stackable grid">
+							  <h4  class="ui header">Q：发帖被删除？？</h4>
+							  <div class="ui mini horizontal link list">
+								<div class="item">
+									<i  class="large lightbulb outline icon"></i> 
+								</div>
+								  <div class="item">
+									<p>A：我们会对很久之前的发布的帖子进行清理，届时您会收到微信通知，如果您还需要帮助，可以再次发帖，日常使用时，若您的问题已经解决，希望您主动删除帖子，感谢您的配合！</p>
+								  </div>
+							  </div>
+						  </div>
+						</div>
+						<div class="ui padded vertical segment m-padded-tb-large">
+						  <div class="ui mobile reversed stackable grid">
+							  <h4  class="ui header">Q：账户无法登陆？</h4>
+							  <div class="ui mini horizontal link list">
+								<div class="item">
+									<i  class="large lightbulb outline icon"></i> 
+								</div>
+								  <div class="item">
+									<p>A：对于发帖或评论不遵守规范的用户，我们会对账户进行冻结或者注销，届时会发送邮件通知,如果您对我们的处理有异议，可选择向管理员申诉，或者系统检测到您的账户有异常登录行为，为了您的账户安全，暂时限制您的登录。</p>
+								  </div>
+							  </div>
+						  </div>
+						</div>
+						<div class="ui padded vertical segment m-padded-tb-large">
+						  <div class="ui mobile reversed stackable grid">
+							  <h4  class="ui header">Q：其他问题</h4>
+							  <div class="ui mini horizontal link list">
+								<div class="item">
+									<i  class="large lightbulb outline icon"></i> 
+								</div>
+								  <div class="item">
+									<p>A：虽然上线前已经过大量测试，但由于独立开发，技术和精力有限，难免会出现一些问题，您可以通过系统反馈功能或QQ
+									<i class="qq icon"></i><a  href="https://wpa.qq.com/msgrd?v=3&site=qq&menu=yes&uin=2652517421" class="ui orange header m-inline-block m-text-thin">【2652517421】</a>进行反馈进行反馈，我们会及时进行处理，并将结果反馈给您！谢谢您的合作</p>
+								  </div>
+							  </div>
+						  </div>
+						</div>
+					</div>
+						
+					
+				</div>
+				<!-- 右边标签公告等展示 -->
+<!--				<div class="five wide column">-->
+<!--					&lt;!&ndash; 标签展示 &ndash;&gt;-->
+<!--					<div class="ui segments m-margin-top-large">-->
+<!--					  <div class="ui secondary segment">-->
+<!--					    <div class="ui two column grid">-->
+<!--					      <div class="column">-->
+<!--					        <i class="tags icon"></i>标签-->
+<!--					      </div>-->
+<!--					      -->
+<!--					    </div>-->
+<!--					  </div>-->
+<!--					  <div class="ui teal segment">-->
+<!--					    <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-large">-->
+<!--					      正在寻找 <div class="detail">23</div>-->
+<!--					    </a>-->
+<!--						<a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-large">-->
+<!--						  已经找到 <div class="detail">23</div>-->
+<!--						</a>-->
+<!--						<a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-large">-->
+<!--						  等待认领 <div class="detail">23</div>-->
+<!--						</a>-->
+<!--						<a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-large">-->
+<!--						  已被认领 <div class="detail">23</div>-->
+<!--						</a>-->
+<!--					  </div>-->
+<!--					</div>-->
+<!--					&lt;!&ndash; 分类 &ndash;&gt;-->
+<!--					-->
+<!--					<div class="ui segments m-margin-top-large">-->
+<!--					  <div class="ui secondary segment">-->
+<!--					    <div class="ui two column grid">-->
+<!--					      <div class="column">-->
+<!--					        <i class="bookmark icon"></i>分类-->
+<!--					      </div>-->
+<!--					      -->
+<!--					    </div>-->
+<!--					  </div>-->
+<!--					  <div class="ui teal segment">-->
+<!--					    <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-large">-->
+<!--					    校园卡<div class="detail">23</div>-->
+<!--					    </a>-->
+<!--						<a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-large">-->
+<!--						钥匙<div class="detail">23</div>-->
+<!--						</a>-->
+<!--						<a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-large">-->
+<!--						电子产品<div class="detail">23</div>-->
+<!--						</a>-->
+<!--						<a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-large">-->
+<!--						书本文具 <div class="detail">23</div>-->
+<!--						</a>-->
+<!--					  </div>-->
+<!--					</div>-->
+<!--					&lt;!&ndash; 公告 &ndash;&gt;-->
+<!--					<div class="ui segments m-margin-top-large">-->
+<!--					  <div class="ui secondary segment">-->
+<!--					    <div class="ui two column grid">-->
+<!--					      <div class="column">-->
+<!--					        <i class="bell icon"></i>公告-->
+<!--					      </div>-->
+<!--					      -->
+<!--					    </div>-->
+<!--					  </div>-->
+<!--					  <div class="ui teal segment">-->
+<!--					    <div class="ui fluid vertical menu">-->
+<!--					      <a href="#" class="item">-->
+<!--					        系统新增加了添加好友功能,快来试试吧!-->
+<!--					       -->
+<!--					      </a>-->
+<!--					      -->
+<!--					    </div>-->
+<!--					  </div>-->
+<!--					</div>-->
+<!--					&lt;!&ndash; 二维码 &ndash;&gt;-->
+<!--					<h4 class="ui horizontal divider header m-margin-top-large">扫码联系我们</h4>-->
+<!--					<div class="ui centered card" style="width: 11em">-->
+<!--					    <img src="../static/img/wechat.png" alt="" class="ui rounded image" >-->
+<!--					</div>-->
+<!--				</div>-->
+			
+				
+			</div>
+		</div>
+
+	</div>	
+	
+	<!-- 底部footer -->
+	<footer th:replace="fragment::footer" class="ui inverted vertical segment m-padded-tb-massive ">
+	    <div class="ui center aligned container">
+	        <div class="ui inverted divided grid">
+				<div class="three wide column">
+					<div class="ui inverted link list">
+						<div class="item">
+							<img src="../static/img/wechat.png" class="ui rounded image" alt="" style="width: 110px;">
+						</div>
+					</div>
+				</div>
+				<div class="three wide column">
+					<h4 class="ui inverted header m-text-thin m-text-spaced ">常见问题</h4>
+					<div class="ui inverted link list">
+						<a href="problems.html" class="item">点击查看</a>
+						<a href="feedback.html" class="item">点击反馈</a>
+					</div>
+				</div>
+				<div class="three wide column">
+					 <h4 class="ui inverted header m-text-thin m-text-spaced ">联系我们</h4>
+					 <div class="ui inverted link list">
+						<a href="#" class="item m-text-thin">Email：2652517421@qq.com</a>
+						<a href="#" class="item m-text-thin">QQ：2652517421</a>
+					 </div>
+				</div>
+				<div class="seven wide column">
+					 <h4 class="ui inverted header m-text-thin m-text-spaced ">关于我们</h4>
+					 <p class="m-text-thin m-text-spaced m-opacity-mini">LostFound是我们团队共同开发的一个网站，希望可以给来到这儿的人们带来帮助...</p>
+				</div>
+			</div>
+			<div class="ui inverted section divider"></div>
+			<p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2019 - 2020 LostFound Designed by Alin</p>
+		</div>
+	</footer>
+    <!--	/*/<th:block th:replace="fragment::script">/*/-->
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/semantic.min.js}"></script>
+    <!--    /*/</th:block>/*/-->
+</body>
+</html>
+

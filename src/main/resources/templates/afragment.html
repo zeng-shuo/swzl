@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="head(title)">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:replace="${title}">首页</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css" >
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/me.css}" >
+</head>
+<body>
+
+    <nav th:fragment="menu(n)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small" >
+            <div class="ui container">
+                <div class="ui inverted secondary stackable menu">
+                    <h2 class="ui teal header item">后台管理</h2>
+                    <a th:href="@{/admin/userManage}" class="item" th:classappend="${n==1} ? 'active'"><i class="mini user icon"></i>人员管理</a>
+                    <a th:href="@{/admin/postManage}" class="item" th:classappend="${n==2} ? 'active'"><i class="mini file icon"></i>启事管理</a>
+                    <a th:href="@{/admin/noticeManage}" class="item" th:classappend="${n==3} ? 'active'"><i class="mini bell icon"></i>公告管理</a>
+                    <a th:href="@{/admin/feedbackManage}" class="item" th:classappend="${n==4} ? 'active'"><i class="mini envelope icon"></i>反馈管理</a>
+                    <a th:href="@{/index}" class="item" ><i class="mini home icon"></i>进入主页</a>
+                    <div class="right m-item  menu">
+                        <div class="ui dropdown  item">
+                            <div class="text" id="loginA">
+                                <img  class="ui avatar image" th:src="@{${session.localUser.photo}}">
+                                [[${session.localUser.username}]]
+                            </div>
+                            <i class="dropdown icon"></i>
+                            <div class="menu">
+                                <a th:href="@{/logout}" class="item">退出</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+    <footer th:fragment="footer" class="ui inverted vertical segment m-padded-tb-massive">
+        <div class="ui center aligned container">
+            <div class="ui inverted divided stackable grid">
+                <div class="three wide column">
+                    <div class="ui inverted link list">
+                        <div class="item">
+                            <img th:src="@{/img/wechat.png}" class="ui rounded image" style="width: 110px">
+                        </div>
+                    </div>
+                </div>
+                <div class="three wide column">
+                    <h4 class="ui inverted header m-text-thin m-text-spaced " >常见问题</h4>
+                    <div class="ui inverted link list">
+                        <a th:href="@{/problems}" class="item m-text-thin">点击此处查看</a>
+                    </div>
+                </div>
+                <div class="three wide column">
+                    <h4 class="ui inverted header m-text-thin m-text-spaced ">联系我们</h4>
+                    <div class="ui inverted link list">
+                        <a href="#" class="item m-text-thin">Email：2652517421@qq.com</a>
+                        <a href="#" class="item m-text-thin">QQ：2652517421</a>
+                    </div>
+                </div>
+                <div class="seven wide column">
+                    <h4 class="ui inverted header m-text-thin m-text-spaced ">关于我们</h4>
+                    <p class="m-text-thin m-text-spaced m-opacity-mini">这是我们倾心制作的网站希望可以给来到这儿的人有所帮助...</p>
+                </div>
+            </div>
+            <div class="ui inverted section divider"></div>
+            <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2016 - 2017 Lirenmi Designed by Lirenmi</p>
+        </div>
+    </footer>
+
+    <th:block th:fragment="script">
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+        <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </th:block>
+</body>
+</html>

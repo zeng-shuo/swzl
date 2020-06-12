@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>登录</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css" >
+	<link rel="stylesheet"  th:href="@{/css/me.css}" >
+</head>
+<body>
+	<br />
+	<br />
+	<div class="m-container-small m-padded-tb-massive" style="max-width: 30em !important;">
+		<div class="ui container">
+			<div class="ui middle aligned center aligned grid">
+				<div class="column">
+					<h2 class="ui teal image header">
+					
+						<div class="content">
+							欢迎回来
+						</div>
+					</h2>
+					<form id="app" class="ui large form">
+						<div class="ui stacked segment">
+							<div class="field">
+							  <div class="ui left icon input">
+								<i class="user icon"></i>
+								<input type="text" v-model="username" placeholder="账号">
+                                <label v-if=" username.length==0 " v-text="umessage"></label>
+							  </div>
+							</div>
+							<div class="field">
+							  <div class="ui left icon input">
+								<i class="lock icon"></i>
+                                    <input type="password" v-model="password" @keyup.enter="doLogin()" placeholder="密码">
+                                <label v-if=" password.length==0 " v-text="pmessage"></label>
+							  </div>
+							</div>
+							
+							
+							<div class="ui fluid large teal  button" @click="doLogin()">登录</div>
+							<div class="ui middle aligned two column grid">
+								<div class="left aligned column">
+									<div class="ui checkbox" style="margin-top: 1em;">
+										<input id="checked1" type="checkbox" checked="true">
+										<label>记住密码</label>
+									</div>
+								</div>
+								<div class="right aligned column" style="margin-top: 1em;">
+									<a th:href="@{/repassword}">忘记密码？</a>
+
+								</div>
+							</div>
+						</div>
+
+					</form>
+					<div class="ui message">
+					  新用户？ <a th:href="@{/register}">注册</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+    <!--	/*/<th:block th:replace="fragment::script">/*/-->
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/semantic.min.js}"></script>
+    <script th:src="@{/js/axios.min.js}"></script>
+    <script th:src="@{/js/vue.min.js}"></script>
+    <script th:src="@{/js/login.js}"></script>
+    <!--    /*/</th:block>/*/-->
+</body>
+</html>

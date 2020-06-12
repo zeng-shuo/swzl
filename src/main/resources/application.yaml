@@ -1,0 +1,44 @@
+server:
+  port: 8080                      # tomcat端口
+  servlet:
+    context-path: /swzl           # 项目部署路径
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: root
+    username: root                        # 数据库连接信息
+    url: jdbc:mysql:///swzl?useSSL=true&serverTimezone=UTC&characterEncoding=utf-8
+  thymeleaf:
+    cache: false                            # 禁用thymeleaf缓存
+    prefix: classpath:/templates/          # thymeleaf视图解析前置
+    suffix: .html                         # 后置
+
+mybatis:
+  type-aliases-package: com.ctgu.domain    # 别名包扫描
+  configuration:
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl     #控制台输出sql日志
+    map-underscore-to-camel-case: true     # 允许mybatis 驼峰命名映射，比如 type_name->typeName
+
+logging:
+  level:
+    root: info                        #默认日志级别
+    com.ctgu.swzl.controller: warn   # controller包下日志级别
+  file:
+    name: E:/Log/swzl-web.log   # 项目日志保存路径
+
+mail:
+  account: surkuang             # 发送邮箱的账号，@前面的内容
+  password: badlvptivnpwijij    # 授权码，qq邮箱中开启smtp服务，就能查看
+  from: surkuang@qq.com         # 发送者邮箱
+images:
+  path: E:/picture   # 图片保存的地址win10为例，保存到E盘下的picture文件夹
+
+
+
+
+
+
+
+
+

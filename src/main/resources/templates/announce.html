@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragment::head(~{::title})">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>发布</title>
+	<link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css}" >
+<!--    <link rel="stylesheet" th:href="@{/css/semantic.min.css}" >-->
+	<link rel="stylesheet" th:href="@{/css/me.css}" >
+</head>
+<body>
+	<!-- 导航 -->
+	<nav th:replace="fragment::menu(2)" class="ui inverted attached segment m-padded-tb-mini">
+	 <div class="ui container">
+		 <div class="ui inverted secondary menu">
+			<h2 class="ui teal header item">LostFound</h2>
+			<a href="index.html" class="item"><i class="mini home icon"></i>首页</a>
+			<a href="announce.html" class="item"><i class="mini edit icon"></i>发布</a>
+			<a href="mine.html" class="item"><i class="mini user icon"></i>我的</a>
+			<div class="right m-item item m-mobile-hide">
+			  <div class="ui icon inverted transparent input m-margin-tb-tiny">
+			    <input type="text" placeholder="Search....">
+			    <i class="search link icon"></i>
+			  </div>
+			</div>
+		 </div>
+	 </div>
+	</nav>
+	
+	<!-- 中间内容 -->
+	<div class="m-container m-padded-tb-large">
+		<div class="ui container">
+			<div class="ui grid">
+				
+				<div class="twenty wide column">
+					
+					<!-- header -->
+					<div class="ui top attached segment ">
+						<div class="ui middle aligned two column grid">
+							<div class="column">
+								<h3 class="ui teal header">发布</h3>
+							</div>
+							
+						</div>
+					</div>
+					<!-- content -->
+                    <form class="ui attached segment" th:action="@{/announce}" method="post" enctype="multipart/form-data">
+						<div class="ui padded vertical segment m-padded-tb-large">
+							<div class="ui mobile reversed stackable grid">
+								            <!--发布-->
+
+								    <div class="ui form" >
+								        <div class="field">
+								            <label><b>类型：</b></label>
+								            <div class="field inline" >
+								                <div class="ui radio checkbox">
+								                    <input type="radio" name="fruit" value="x">
+								                    <label>寻物启事</label>
+								                </div>
+								            </div>
+								            <div class="field inline" >
+								                <div class="ui radio checkbox">
+								                    <input type="radio" name="fruit" value="r">
+								                    <label>认领启事</label>
+								                </div>
+								            </div>
+								        </div>
+								        <div class="field">
+                                            <label><b>分类：</b></label>
+                                            <select class="ui dropdown" name="typeName">
+                                                <option >-请选择一个类别-</option>
+                                                <option th:each="type:${types}" th:text="${type.typeName}">钥匙</option>
+                                            </select>
+								        </div>
+										<div class="field">
+										   <label>标题：</label> 
+										</div>
+								       
+								    </div>
+									
+									<div class="ui form" style="width: 100%; height: 100%;min-height:100px">
+									    <div class="field">	
+									        <input name="title" type="text"  placeholder="校园卡掉了" maxlength="40">
+									    </div>
+									    <div class="field ">
+											<label>详情：</label> 
+									        <textarea name="content" rows="6" placeholder="今天中午大概12点的时候,从食堂离开忘了拿走餐桌上的校园卡,有捡到的吗?看到请联系我,请你喝奶茶哦!" maxlength="300"
+									                  class="tweet-textarea disabled-resize"></textarea>
+									    </div>
+										<div class="field">
+										    <label>图片：</label>
+										    <div id="imgPreview">
+										     <div id="prompt3">
+										     <span id="imgSpan" class="ui center">
+												<p class="m-text-thin m-text-spaced m-opacity-mini" >点击上传</p>
+												<i class="large upload icon"></i>
+										     </span>
+										     <input name="upload" type="file" id="file" class="filepath" onchange="changepic(this)" accept="image/jpg,image/jpeg,image/png,image/PNG">
+										     <!--当vaule值改变时执行changepic函数，规定上传的文件只能是图片-->
+										     </div>
+										     <img style="width: 150px;height: 150px" src="" id="img3" />
+										    </div>
+											
+										</div>
+										<div class="field">
+										    <label>地点：</label>
+										    <input name="address" type="text" maxlength="25"  placeholder="选填">
+										</div>
+										<div class="actions">
+										    <input type="submit" class="ui primary right floated m-margin-tb-large  button" value="确认">
+										    <input type="button" class="ui right floated m-margin-tb-large button" value="取消">
+										</div>
+									</div>
+
+							</div>
+						</div>
+                    </form>
+
+					
+				</div>
+				
+			
+				
+			</div>
+		</div>
+
+	</div>	
+	
+	<!-- 底部footer -->
+	<footer th:replace="fragment::footer" class="ui inverted vertical segment m-padded-tb-massive ">
+	    <div class="ui center aligned container">
+	        <div class="ui inverted divided grid">
+				<div class="three wide column">
+					<div class="ui inverted link list">
+						<div class="item">
+							<img src="./img/wechat.png" class="ui rounded image" alt="" style="width: 110px;">
+						</div>
+					</div>
+				</div>
+				<div class="three wide column">
+					<h4 class="ui inverted header m-text-thin m-text-spaced ">常见问题</h4>
+					<div class="ui inverted link list">
+						<a href="problems.html" class="item">点击查看</a>
+						<a href="feedback.html" class="item" >点击反馈</a> 
+					</div>
+				</div>
+				<div class="three wide column">
+					 <h4 class="ui inverted header m-text-thin m-text-spaced ">联系我们</h4>
+					 <div class="ui inverted link list">
+						<a href="#" class="item m-text-thin">Email：2652517421@qq.com</a>
+						<a href="#" class="item m-text-thin">QQ：2652517421</a>
+					 </div>
+				</div>
+				<div class="seven wide column">
+					 <h4 class="ui inverted header m-text-thin m-text-spaced ">关于我们</h4>
+					 <p class="m-text-thin m-text-spaced m-opacity-mini">LostFound是我们团队共同开发的一个网站，希望可以给来到这儿的人们带来帮助...</p>
+				</div>
+			</div>
+			<div class="ui inverted section divider"></div>
+			<p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2019 - 2020 LostFound Designed by Alin</p>
+		</div>
+	</footer>
+
+    <!--	/*/<th:block th:replace="fragment::script">/*/-->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+    <!--    /*/</th:block>/*/-->
+    <script>
+        function changepic() {
+         $("#prompt3").css("display", "none");
+         var reads = new FileReader();
+         f = document.getElementById('file').files[0];
+         reads.readAsDataURL(f);
+         reads.onload = function(e) {
+         document.getElementById('img3').src = this.result;
+         $("#img3").css("display", "block");
+         };
+        }
+    </script>
+
+</body>
+</html>

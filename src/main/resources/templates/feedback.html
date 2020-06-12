@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragment::head(~{::title})">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>反馈</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css" >
+	<link rel="stylesheet" th:href="@{/css/me.css}" >
+</head>
+<body>
+	<!-- 导航 -->
+	<nav th:replace="fragment::menu(0)" class="ui inverted attached segment m-padded-tb-mini">
+	 <div class="ui container">
+		 <div class="ui inverted secondary menu">
+			<h2 class="ui teal header item">LostFound</h2>
+			<a href="index.html" class="item"><i class="mini home icon"></i>首页</a>
+			<a href="announce.html" class="item"><i class="mini edit icon"></i>发布</a>
+			<a href="mine.html" class="item"><i class="mini user icon"></i>我的</a>
+			<div class="right m-item item m-mobile-hide">
+			  <div class="ui icon inverted transparent input m-margin-tb-tiny">
+			    <input type="text" placeholder="Search....">
+			    <i class="search link icon"></i>
+			  </div>
+			</div>
+		 </div>
+	 </div>
+	</nav>
+	
+	<!-- 中间内容 -->
+	<div class="m-container m-padded-tb-large">
+		<div class="ui container">
+			<div class="ui grid">
+				<!-- 左边启示列表 -->
+				<div class="thirteen wide column">
+					
+					<!-- header -->
+					<div class="ui top attached segment ">
+						<div class="ui middle aligned two column grid">
+							<div class="column">
+								<h3 class="ui teal header">反馈</h3>
+							</div>
+							
+						</div>
+					</div>
+					<!-- content -->
+					<div  class="ui attached segment">
+						
+						<div class="ui padded vertical segment m-padded-tb-large">
+							<div class="ui mobile reversed stackable grid">
+
+								        <div class="ui form" style="width: 100%; height: 100%;min-height:100px">
+								            <div class="field">
+								                <input id="subject"  placeholder="主题（最多40字）" maxlength="50"
+								                       class="tweet-textarea disabled-resize" autofocus/>
+								            </div>
+								            <div class="field ">
+								                <textarea id="content" rows="6" placeholder="您有什么意见或建议，或者您需要什么帮助（最多300字）" maxlength="300"
+								                          class="tweet-textarea disabled-resize"></textarea>
+								            </div>
+											<div class="actions">
+											    <input type="button" onclick="doFeedback()" value="确认" class="ui primary right floated m-margin-tb-large  button">
+											    <input type="button" onclick="doBack()" value="取消" class="ui right floated m-margin-tb-large button">
+											</div>
+								        </div>
+								    
+
+							</div>
+						</div>
+					</div>
+					<!-- footer -->
+					
+				</div>
+				
+			
+				
+			</div>
+		</div>
+
+	</div>	
+	
+	<!-- 底部footer -->
+	<footer th:replace="fragment::footer" class="ui inverted vertical segment m-padded-tb-massive ">
+	    <div class="ui center aligned container">
+	        <div class="ui inverted divided grid">
+				<div class="three wide column">
+					<div class="ui inverted link list">
+						<div class="item">
+							<img src="./img/wechat.png" class="ui rounded image" alt="" style="width: 110px;">
+						</div>
+					</div>
+				</div>
+				<div class="three wide column">
+					<h4 class="ui inverted header m-text-thin m-text-spaced ">常见问题</h4>
+					<div class="ui inverted link list">
+						<a href="problems.html" class="item">点击查看</a>
+						<a href="feedback.html" class="item" >点击反馈</a> 
+					</div>
+				</div>
+				<div class="three wide column">
+					 <h4 class="ui inverted header m-text-thin m-text-spaced ">联系我们</h4>
+					 <div class="ui inverted link list">
+						<a href="#" class="item m-text-thin">Email：2652517421@qq.com</a>
+						<a href="#" class="item m-text-thin">QQ：2652517421</a>
+					 </div>
+				</div>
+				<div class="seven wide column">
+					 <h4 class="ui inverted header m-text-thin m-text-spaced ">关于我们</h4>
+					 <p class="m-text-thin m-text-spaced m-opacity-mini">LostFound是我们团队共同开发的一个网站，希望可以给来到这儿的人们带来帮助...</p>
+				</div>
+			</div>
+			<div class="ui inverted section divider"></div>
+			<p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2019 - 2020 LostFound Designed by Alin</p>
+		</div>
+	</footer>
+
+
+    <!--	/*/<th:block th:replace="fragment::script">/*/-->
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/semantic.min.js}"></script>
+    <!--    /*/</th:block>/*/-->
+
+    <script>
+        function doFeedback() {
+            var subject = $("#subject").val();
+            var content = $("#content").val();
+            $.ajax({
+                url: "feedback",
+                type: "post",
+                async: true,
+                data: {title:subject,content:content},
+                success: function (response) {
+                    alert("反馈成功！");
+                    location.href = "index";
+                },
+                error: function () {
+                    alert("提交错误，请联系管理员修复！");
+                }
+            });
+        }
+        function doBack() {
+            location.href = "index";
+        }
+    </script>
+</body>
+</html>
